@@ -1,1 +1,1 @@
-web: gunicorn hello_world.wsgi --bind 0.0.0.0:$PORT
+web: gunicorn factum_humanum.wsgi --bind 0.0.0.0:$PORT
