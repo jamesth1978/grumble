@@ -23,7 +23,7 @@ class CreatorForm(forms.ModelForm):
 class WorkForm(forms.ModelForm):
     class Meta:
         model = Work
-        fields = ['title', 'description', 'category', 'creation_date']
+        fields = ['title', 'description', 'category', 'creation_date', 'work_file']
         widgets = {
             'title': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -45,4 +45,10 @@ class WorkForm(forms.ModelForm):
                 'type': 'date',
                 'required': True
             }),
+            'work_file': forms.FileInput(attrs={
+                'class': 'form-control',
+                'accept': '.pdf,.doc,.docx,.txt,.rtf,.mp3,.wav,.flac,.ogg,.m4a,.aac,.jpg,.jpeg,.png,.gif,.bmp,.svg,.webp,.mp4,.mov,.avi,.mkv,.flv,.webm,.zip,.rar,.7z,.psd,.ai,.xd',
+                'required': True
+            }),
         }
+

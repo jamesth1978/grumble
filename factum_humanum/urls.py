@@ -18,7 +18,7 @@ urlpatterns = [
     path("certificate/<uuid:work_id>/", core_views.certificate, name="certificate"),
     path("certificate/<uuid:work_id>/download/", core_views.download_certificate, name="download_certificate"),
     path("admin/", admin.site.urls),
-    path("__reload__/,", include("django_browser_reload.urls")),
+    path("__reload__/", include("django_browser_reload.urls")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

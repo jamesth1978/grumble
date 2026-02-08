@@ -20,7 +20,7 @@ class CreatorAdmin(admin.ModelAdmin):
 
 @admin.register(Work)
 class WorkAdmin(admin.ModelAdmin):
-    list_display = ('title', 'creator', 'category', 'registered_at')
+    list_display = ('title', 'creator', 'category', 'has_file', 'registered_at')
     list_filter = ('category', 'registered_at')
     search_fields = ('title', 'creator__name', 'description')
     readonly_fields = ('id', 'registered_at')
@@ -29,10 +29,15 @@ class WorkAdmin(admin.ModelAdmin):
             'fields': ('id', 'creator', 'title', 'category')
         }),
         ('Details', {
-            'fields': ('description', 'creation_date')
+            'fields': ('description', 'creation_date', 'work_file')
         }),
         ('Timestamps', {
             'fields': ('registered_at',),
             'classes': ('collapse',)
         }),
     )
+    
+    def has_file(self, obj):
+        return bool(obj.work_file)
+    has_file.boolean = True
+    has_file.short_description = "Has Upload"
