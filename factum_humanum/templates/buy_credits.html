@@ -1,0 +1,241 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Buy Credits - Register Your Works">
+    <meta name="theme-color" content="#1f4788">
+    <title>Buy Credits - Factum Humanum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333333;
+        }
+        
+        body {
+            background: #ffffff;
+            min-height: 100vh;
+            font-family: Consolas, 'Courier New', Monaco, monospace;
+            color: #000000;
+        }
+        
+        .navbar {
+            background-color: #000000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-size: 1rem;
+            font-weight: bold;
+            color: white !important;
+        }
+        
+        .content-section {
+            background: #f5f5f5;
+            border-radius: 2px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cccccc;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-left: 2px solid #333333;
+            padding: 25px;
+            border-radius: 2px;
+            margin: 20px 0;
+            border: 1px solid #cccccc;
+        }
+        
+        .pricing-card h3 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        .price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #000000;
+            margin: 15px 0;
+        }
+        
+        .credits-count {
+            font-size: 1rem;
+            color: #333333;
+            margin-bottom: 15px;
+        }
+        
+        .form-section {
+            background: white;
+            padding: 25px;
+            border-radius: 2px;
+            margin: 30px 0;
+            border: 1px solid #cccccc;
+        }
+        
+        .form-section h4 {
+            color: #000000;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .form-group label {
+            font-weight: normal;
+            color: #000000;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-control {
+            border: 1px solid #cccccc;
+            padding: 10px 12px;
+            border-radius: 2px;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            border-color: #333333;
+            box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            margin-top: 15px;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .how-it-works {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .how-it-works h5 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .how-it-works ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .how-it-works li {
+            margin-bottom: 8px;
+            color: #856404;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">🎨 Created by Humans</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <a class="btn btn-light me-2" href="{% url 'register' %}">Register Work</a>
+                    <a class="btn btn-light" href="{% url 'about' %}">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content-section">
+            <div class="text-center mb-4">
+                <h1>💳 Buy Credits</h1>
+                <p class="lead">Register up to 5 creative works for <strong>£2</strong></p>
+            </div>
+
+            {% if error %}
+            <div class="alert-error">
+                <strong>Error:</strong> {{ error }}
+            </div>
+            {% endif %}
+
+            <div class="pricing-card">
+                <h3>📦 Credit Package</h3>
+                <div class="credits-count">5 Work Registrations</div>
+                <div class="price">£2.00</div>
+                <p>Register and certify up to 5 creative works with our platform. Each registration includes:</p>
+                <ul>
+                    <li>File upload for your creative work</li>
+                    <li>Work details (title, category, description)</li>
+                    <li>Human creation verification review</li>
+                    <li>Official certificate (once approved)</li>
+                </ul>
+            </div>
+
+            <form method="post" class="form-section">
+                {% csrf_token %}
+                <h4>🔐 Complete Your Purchase</h4>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" 
+                           value="{{ email }}" placeholder="your@email.com" required>
+                    <small class="text-muted">We'll use this email to track your credits and send confirmations</small>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                    💳 Proceed to Payment
+                </button>
+            </form>
+
+            <div class="how-it-works">
+                <h5>❓ How It Works</h5>
+                <ol>
+                    <li>Enter your email address above</li>
+                    <li>Click "Proceed to Payment"</li>
+                    <li>Complete payment securely with Stripe</li>
+                    <li>Receive 5 credits instantly</li>
+                    <li>Start registering your works!</li>
+                </ol>
+            </div>
+
+            <div class="alert alert-info" role="alert">
+                <h5>🛡️ Secure Payment</h5>
+                <p>We use <strong>Stripe</strong> for secure payment processing. Your card details are never stored on our servers.</p>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{% url 'register' %}" class="btn btn-outline-primary">
+                    ← Back to Registration
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

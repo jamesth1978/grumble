@@ -29,10 +29,15 @@ class Creator(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255)
     email = models.EmailField()
+    credits = models.IntegerField(default=0, help_text="Number of work registrations available")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+    
+    def has_credits(self):
+        """Check if creator has available credits"""
+        return self.credits > 0
 
 
 class Work(models.Model):
@@ -59,6 +64,18 @@ class Work(models.Model):
         help_text="Upload your creative work (max 100 MB). Allowed types: documents, audio, images, video, archives, design files."
     )
     registered_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(
+        max_length=20,
+        choices=[
+            ('pending_review', 'Pending Review'),
+            ('approved', 'Approved'),
+            ('rejected', 'Rejected'),
+        ],
+        default='pending_review',
+        help_text="Review status of the work"
+    )
+    reviewed_at = models.DateTimeField(null=True, blank=True)
+    reviewer_notes = models.TextField(blank=True, help_text="Notes from the reviewer")
     
     class Meta:
         ordering = ['-registered_at']
@@ -84,3 +101,24 @@ class Work(models.Model):
             'psd': '🎨', 'ai': '🎨', 'xd': '🎨', 'figma': '🎨',
         }
         return icons.get(ext, '📎')
+
+
+class Payment(models.Model):
+    """Records successful Stripe payments for work credits"""
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    creator = models.ForeignKey(Creator, on_delete=models.SET_NULL, null=True, blank=True, related_name='payments')
+    email = models.EmailField(help_text="Email of the purchaser")
+    stripe_charge_id = models.CharField(max_length=255, unique=True, help_text="Stripe charge/session ID")
+    stripe_session_id = models.CharField(max_length=255, unique=True, blank=True)
+    amount_cents = models.IntegerField(help_text="Amount in pence (GBP)")
+    currency = models.CharField(max_length=3, default='GBP')
+    credits_granted = models.IntegerField(default=5, help_text="Number of credits given for this payment")
+    fulfilled = models.BooleanField(default=False, help_text="Whether credits have been added to creator")
+    created_at = models.DateTimeField(auto_now_add=True)
+    fulfilled_at = models.DateTimeField(null=True, blank=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"Payment {self.stripe_charge_id} - {self.email}"

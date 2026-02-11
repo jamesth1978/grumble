@@ -11,12 +11,22 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from factum_humanum.core import views as core_views
+from factum_humanum.core import payment_views
 
 urlpatterns = [
     path("", core_views.index),
     path("register/", core_views.register_work, name="register"),
     path("certificate/<uuid:work_id>/", core_views.certificate, name="certificate"),
     path("certificate/<uuid:work_id>/download/", core_views.download_certificate, name="download_certificate"),
+    path("work-received/<uuid:work_id>/", core_views.work_received, name="work_received"),
+    path("about/", core_views.about, name="about"),
+    
+    # Payment routes
+    path("credits/", payment_views.buy_credits, name="buy_credits"),
+    path("credits/success/", payment_views.checkout_success, name="checkout_success"),
+    path("credits/cancel/", payment_views.checkout_cancel, name="checkout_cancel"),
+    path("stripe/webhook/", payment_views.stripe_webhook, name="stripe_webhook"),
+    
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
 ]

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            font-family: Consolas, 'Courier New', Monaco, monospace;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+        .header {
+            color: #e74c3c;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .message-box {
+            background-color: #fadbd8;
+            border-left: 4px solid #e74c3c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .notes {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-style: italic;
+            border-left: 4px solid #95a5a6;
+        }
+        .footer {
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Update on Your Submission</h1>
+        </div>
+
+        <p>Hello {{ creator_name }},</p>
+
+        <p>Thank you for submitting "<strong>{{ work_title }}</strong>" to Factum Humanum.</p>
+
+        <div class="message-box">
+            <strong>Review Result: Not Approved</strong><br>
+            After careful review, we were unable to approve this work at this time.
+        </div>
+
+        <p><strong>Reviewer Comments:</strong></p>
+        <div class="notes">
+            {{ reviewer_notes }}
+        </div>
+
+        <p><strong>What can you do?</strong></p>
+        <ul>
+            <li>You are welcome to address the reviewer's comments and resubmit your work</li>
+            <li>Consider providing additional documentation or context about your work</li>
+            <li>Feel free to contact us if you have questions about the review</li>
+        </ul>
+
+        <p>We believe in supporting genuine human creativity. If you'd like to resubmit with modifications or additional documentation, please visit our registration page and try again.</p>
+
+        <p>Thank you for your time and for supporting Factum Humanum.</p>
+
+        <div class="footer">
+            <p><strong>Factum Humanum</strong> – Certifying Human Creativity<br>
+            <a href="https://factumhumanum.org/about/">Learn more about us</a></p>
+        </div>
+    </div>
+</body>
+</html>

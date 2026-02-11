@@ -1,0 +1,238 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="About Factum Humanum - Certifying Human Creativity">
+    <meta name="theme-color" content="#1f4788">
+    <title>About Factum Humanum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333333;
+        }
+        
+        body {
+            background: #ffffff;
+            min-height: 100vh;
+            font-family: Consolas, 'Courier New', Monaco, monospace;
+            color: #000000;
+        }
+        
+        .navbar {
+            background-color: #000000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-size: 1rem;
+            font-weight: bold;
+            color: white !important;
+        }
+        
+        .hero {
+            text-align: center;
+            color: #000000;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+        
+        .hero h1 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: none;
+        }
+        
+        .hero p {
+            font-size: 1rem;
+        }
+        
+        .content-section {
+            background: #f5f5f5;
+            border-radius: 2px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cccccc;
+        }
+        
+        .content-section h2 {
+            color: #000000;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333333;
+            padding-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .feature-box {
+            background: white;
+            padding: 20px;
+            border-radius: 2px;
+            margin: 15px 0;
+            border-left: 2px solid #333333;
+            border: 1px solid #cccccc;
+        }
+        
+        .feature-box h4 {
+            color: #000000;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 12px 30px;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .row {
+            margin-top: 30px;
+        }
+        
+        .col-md-6 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">🎨 Created by Humans</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <a class="btn btn-light me-2" href="{% url 'register' %}">Register Work</a>
+                    <a class="btn btn-light" href="{% url 'about' %}">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>About Factum Humanum</h1>
+        <p>Certifying Authenticity in a Digital Age</p>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <h2>🎯 Our Mission</h2>
+            <p>
+                Factum Humanum .org exists to promote and certify the human-made nature of creative works in an era of increasing concern about artificial intelligence and machine-generated content. We believe in celebrating genuine human creativity and providing a trustworthy way for creators to demonstrate that their work is authentically their own.
+            </p>
+
+            <h2>🌟 What We Do</h2>
+            <p>
+                Factum Humanum allows creative professionals and enthusiasts to register their works and receive official certification that their creations are genuinely human-made. Through a careful review process, we verify that submitted works are likely to have been created by humans rather than AI systems.
+            </p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="feature-box">
+                        <h4>📤 Easy Registration</h4>
+                        <p>Register your creative work in just a few minutes. Upload your work, provide details about the creation process, and submit for review.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box">
+                        <h4>🔍 Expert Review</h4>
+                        <p>Our review team carefully examines each submission to ensure it meets our human-creation standards. We look beyond the surface to understand the creative process.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box">
+                        <h4>📜 Official Certificate</h4>
+                        <p>Upon approval, receive an official certificate that certifies your work as authentically human-created. Download and share it with confidence.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box">
+                        <h4>🛡️ Trust & Authenticity</h4>
+                        <p>Build trust with your audience by proving your work is genuinely yours. Share your certificate across platforms and portfolios.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🎨 Who Can Use Factum Humanum?</h2>
+            <p>
+                Our service is perfect for:
+            </p>
+            <ul>
+                <li><strong>Musicians & Sound Artists</strong> – Certify your compositions and recordings</li>
+                <li><strong>Writers & Authors</strong> – Authenticate your written works</li>
+                <li><strong>Visual Artists</strong> – Prove the originality of your visual creations</li>
+                <li><strong>Filmmakers & Videographers</strong> – Certify your video works</li>
+                <li><strong>Content Creators</strong> – Demonstrate authenticity in your creative output</li>
+                <li><strong>Anyone Creating Genuine Art</strong> – Protect and celebrate your human creativity</li>
+            </ul>
+
+            <h2>🚀 How It Works</h2>
+            <ol>
+                <li><strong>Register:</strong> Visit our registration page and create an account with your information</li>
+                <li><strong>Upload:</strong> Upload your creative work and provide details about it</li>
+                <li><strong>Review:</strong> Our team reviews your submission, typically within 5-7 business days</li>
+                <li><strong>Certificate:</strong> If approved, receive your official human-creation certificate</li>
+                <li><strong>Share:</strong> Download your certificate and share it to prove authenticity</li>
+            </ol>
+
+            <h2>⚖️ Criteria for Approval</h2>
+            <p>
+                We approve works based on several criteria:
+            </p>
+            <div class="feature-box">
+                <h4>Evidence of Human Creation</h4>
+                <p>The work demonstrates characteristics typical of human creative output, including emotional depth, unique perspective, and nuanced decision-making.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Originality</h4>
+                <p>The work represents genuine creative effort and original thought, not merely reproduction or simple remix of existing works.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Authenticity</h4>
+                <p>The creator is genuinely the maker of the work and can demonstrate understanding of the creative process behind it.</p>
+            </div>
+
+            <h2>🤔 Why Human Creativity Matters</h2>
+            <p>
+                In a world where AI-generated content is becoming increasingly sophisticated, human creativity is more valuable than ever. There's something irreplaceable about work created by human hands and minds – the struggles overcome, the choices made, the personality expressed. Factum Humanum celebrates that uniqueness and helps creators receive recognition for their authentic human creativity.
+            </p>
+
+            <h2>📞 Contact & Support</h2>
+            <p>
+                Have questions about our service? Want to discuss human creativity in the digital age? We'd love to hear from you!
+            </p>
+            <p>
+                <strong>Email:</strong> <a href="mailto:info@factumhumanum.org">info@factumhumanum.org</a>
+            </p>
+
+            <div class="text-center">
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Register Your Work Today</a>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background: #000000; color: white; text-align: center; padding: 20px; margin-top: 40px;">
+        <p>&copy; 2024 Factum Humanum. Certifying Human Creativity.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

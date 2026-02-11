@@ -136,6 +136,24 @@ MEDIA_ROOT = BASE_DIR / "factum_humanum" / "media"
 
 
 # Default primary key field type
+# Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@factumhumanum.org')
+# Site URL for email links and absolute URLs
+SITE_URL = config('SITE_URL', default='http://localhost:8000')
+
+# Stripe configuration
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='sk_test_demo')
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY', default='pk_test_demo')
+STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET', default='whsec_test_demo')
+STRIPE_PRODUCT_PRICE_ID = config('STRIPE_PRODUCT_PRICE_ID', default='price_demo')
+
+# Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

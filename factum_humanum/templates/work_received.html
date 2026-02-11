@@ -1,0 +1,183 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Work Received - Factum Humanum">
+    <meta name="theme-color" content="#1f4788">
+    <title>Work Received - Factum Humanum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333333;
+        }
+        
+        body {
+            background: #ffffff;
+            min-height: 100vh;
+            font-family: Consolas, 'Courier New', Monaco, monospace;
+            color: #000000;
+        }
+        
+        .navbar {
+            background-color: #000000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-size: 1rem;
+            font-weight: bold;
+            color: white !important;
+        }
+        
+        .content-section {
+            background: #f5f5f5;
+            border-radius: 2px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cccccc;
+        }
+        
+        .success-box {
+            background: white;
+            border-left: 2px solid #333333;
+            padding: 25px;
+            border-radius: 2px;
+            margin: 20px 0;
+            border: 1px solid #cccccc;
+        }
+        
+        .success-box h3 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .work-details {
+            background: white;
+            padding: 20px;
+            border-radius: 2px;
+            margin: 20px 0;
+            border: 1px solid #cccccc;
+        }
+        
+        .work-details h4 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .work-details p {
+            margin-bottom: 10px;
+        }
+        
+        .next-steps {
+            background: white;
+            border-left: 2px solid #333333;
+            padding: 20px;
+            border-radius: 2px;
+            margin: 20px 0;
+            border: 1px solid #cccccc;
+        }
+        
+        .next-steps h4 {
+            color: #000000;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .next-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .next-steps li {
+            margin-bottom: 10px;
+        }
+        
+        .button-group {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 12px 30px;
+            margin: 10px 5px;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">🎨 Created by Humans</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <a class="btn btn-light me-2" href="{% url 'register' %}">Register Work</a>
+                    <a class="btn btn-light" href="{% url 'about' %}">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="content-section">
+            <div class="success-box">
+                <h3>✓ Your Work Has Been Received</h3>
+                <p>{{ message }}</p>
+            </div>
+
+            <div class="work-details">
+                <h4>📋 Work Details</h4>
+                <p><strong>Title:</strong> {{ work.title }}</p>
+                <p><strong>Category:</strong> {{ work.get_category_display }}</p>
+                <p><strong>Creation Date:</strong> {{ work.creation_date|date:"F d, Y" }}</p>
+                {% if work.work_file %}
+                <p><strong>File Uploaded:</strong> {{ work.work_file.name|truncatechars:50 }} ({{ work.get_file_icon }})</p>
+                {% endif %}
+                <p><strong>Submitted:</strong> {{ work.registered_at|date:"F d, Y \a\t H:i" }}</p>
+            </div>
+
+            <div class="next-steps">
+                <h4>📧 What Happens Next</h4>
+                <ol>
+                    <li><strong>Confirmation Email:</strong> You should receive a confirmation email at <code>{{ work.creator.email }}</code></li>
+                    <li><strong>Review Process:</strong> Our team will review your work to verify it's likely human-created (typically 5-7 business days)</li>
+                    <li><strong>Approval Email:</strong> You'll receive an email with the results of the review</li>
+                    <li><strong>Certificate:</strong> If approved, you can download your certificate here</li>
+                </ol>
+            </div>
+
+            <div class="alert alert-info" role="alert">
+                <h5>💡 Keep Your Reference</h5>
+                <p>Your work ID is: <code>{{ work.id }}</code></p>
+                <p>You can save this ID to track your submission. You'll be able to view your certificate at any time using this ID.</p>
+            </div>
+
+            <div class="button-group">
+                <a href="{% url 'index' %}" class="btn btn-primary">Back to Home</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-primary">Register Another Work</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
