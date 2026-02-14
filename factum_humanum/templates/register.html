@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register Your Work - Created by Humans</title>
+    <title>Register Your AI-Free Work - Factum Humanum</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -33,6 +33,22 @@
             color: white !important;
         }
         
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
         .form-container {
             background: #f5f5f5;
             border-radius: 2px;
@@ -41,11 +57,11 @@
             border: 1px solid #cccccc;
         }
         
-        .form-container h2 {
-            color: #000000;
+        .form-intro {
+            color: #000;
             margin-bottom: 30px;
-            font-weight: bold;
-            font-size: 1.25rem;
+            font-size: 1rem;
+            line-height: 1.6;
         }
         
         .form-section h3 {
@@ -55,9 +71,11 @@
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 1px solid #cccccc;
+            font-weight: bold;
         }
         
-        .form-control:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: #333333;
             box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.25);
         }
@@ -69,11 +87,14 @@
             font-size: 1rem;
             margin-top: 20px;
             color: white;
+            border-radius: 5px;
+            font-weight: 600;
         }
         
         .btn-submit:hover {
             background-color: var(--secondary-color);
             border-color: var(--secondary-color);
+            color: white;
         }
         
         .errorlist {
@@ -83,13 +104,52 @@
         }
         
         .errorlist li {
-            background-color: #f0f0f0;
-            color: #000000;
+            background-color: #ffebee;
+            color: #c62828;
             padding: 10px;
             border-radius: 2px;
             margin-bottom: 5px;
-            border-left: 2px solid #333333;
+            border-left: 3px solid #c62828;
+        }
+        
+        .help-text {
+            display: block;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .info-box {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 2px;
+            border-left: 3px solid #ff6b6b;
+            margin-top: 30px;
             border: 1px solid #cccccc;
+        }
+        
+        .info-box h4 {
+            margin-top: 0;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        
+        .info-box ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        
+        .pricing-info {
+            background: #fff9c4;
+            border: 1px solid #f0e068;
+            border-radius: 2px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .pricing-info strong {
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -97,16 +157,35 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">🎨 Created by Humans</a>
+            <a class="navbar-brand" href="/">🎨 AI-Free Movement</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <a class="btn btn-light btn-sm me-2" href="{% url 'search_registry' %}">Browse Registry</a>
+                    <a class="btn btn-light btn-sm" href="{% url 'about' %}">About</a>
+                </div>
+            </div>
         </div>
     </nav>
 
     <div class="container">
+        <div class="page-header">
+            <h1>Register Your Human-Created Work</h1>
+            <p>Join the AI-Free Movement and prove your work is authentically yours</p>
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="form-container">
-                    <h2>Register Your Creative Work</h2>
-                    <p class="text-muted">Fill in your information and describe your creation to get your certificate.</p>
+                    <div class="form-intro">
+                        <p>Help prevent AI-generated content from flooding creative spaces. Register your work and get a verifiable certificate that proves it was created without AI assistance. A small registration fee helps us maintain this service and prevent spam.</p>
+                    </div>
+                    
+                    <div class="pricing-info">
+                        <strong>£2.00</strong> per work registration | Get instant certificate + verification ID
+                    </div>
                     
                     <form method="post" class="mt-4" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -137,12 +216,13 @@
                             <div class="mb-3">
                                 <label for="{{ creator_form.email.id_for_label }}" class="form-label">Email Address *</label>
                                 {{ creator_form.email }}
+                                <span class="help-text">We'll send your certificate and verification link to this email</span>
                             </div>
                         </div>
                         
                         <!-- Work Information Section -->
                         <div class="form-section">
-                            <h3>Work Details</h3>
+                            <h3>About Your Work</h3>
                             
                             {% if work_form.title.errors %}
                                 <div class="errorlist">
@@ -154,7 +234,7 @@
                             <div class="mb-3">
                                 <label for="{{ work_form.title.id_for_label }}" class="form-label">Work Title *</label>
                                 {{ work_form.title }}
-                                <small class="form-text text-muted">The title of your creative work</small>
+                                <span class="help-text">The title of your creative work</span>
                             </div>
                             
                             {% if work_form.category.errors %}
@@ -179,7 +259,7 @@
                             <div class="mb-3">
                                 <label for="{{ work_form.creation_date.id_for_label }}" class="form-label">Date Created *</label>
                                 {{ work_form.creation_date }}
-                                <small class="form-text text-muted">When you created this work</small>
+                                <span class="help-text">When you originally created this work</span>
                             </div>
                             
                             {% if work_form.description.errors %}
@@ -192,7 +272,7 @@
                             <div class="mb-3">
                                 <label for="{{ work_form.description.id_for_label }}" class="form-label">Description *</label>
                                 {{ work_form.description }}
-                                <small class="form-text text-muted">Describe your work in detail</small>
+                                <span class="help-text">Describe your work in detail—your creative process, inspiration, techniques used. This helps verify authenticity.</span>
                             </div>
                             
                             {% if work_form.work_file.errors %}
@@ -203,23 +283,28 @@
                                 </div>
                             {% endif %}
                             <div class="mb-3">
-                                <label for="{{ work_form.work_file.id_for_label }}" class="form-label">Upload Your Work *</label>
-                                <div class="input-group">
-                                    {{ work_form.work_file }}
-                                </div>
-                                <small class="form-text text-muted d-block mt-2">
-                                    <strong>Why upload?</strong> File uploads verify ownership of your work and help ensure human creation. 
-                                    Max 100 MB. Supported: documents, audio, images, video, archives, design files.
-                                </small>
+                                <label for="{{ work_form.work_file.id_for_label }}" class="form-label">Work File (Optional)</label>
+                                {{ work_form.work_file }}
+                                <span class="help-text">Upload a file of your work (max 100 MB). Formats: documents, audio, images, video, archives, design files</span>
                             </div>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary btn-submit w-100">Register & Get Certificate</button>
+                        <!-- Submit Button -->
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-submit">Next: Payment (£2.00)</button>
+                        </div>
                     </form>
-                    
-                    <div class="mt-4 text-center">
-                        <p class="text-muted">Already registered? <a href="/">View certificates</a></p>
-                    </div>
+                </div>
+                
+                <!-- Info Box -->
+                <div class="info-box">
+                    <h4>🔒 About This Registration Fee</h4>
+                    <ul>
+                        <li>Prevents spam and frivolous registrations</li>
+                        <li>Helps maintain and improve our verification systems</li>
+                        <li>Ensures only serious creators register high-quality work</li>
+                        <li>Supports the AI-Free movement and human creativity</li>
+                    </ul>
                 </div>
             </div>
         </div>

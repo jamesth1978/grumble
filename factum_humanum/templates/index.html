@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Created by Humans - Certify your creative work">
+    <meta name="description" content="Join the AI-Free Movement - Register your human-created work and prove it's authentically made by you">
     <meta name="theme-color" content="#1f4788">
     <title>{% block title %}{{ title }}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -38,70 +38,213 @@
         .hero {
             text-align: center;
             color: #000000;
-            padding: 60px 20px;
-            background: #f5f5f5;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .hero h1 {
-            font-size: 1.25rem;
+            font-size: 2.5rem;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-shadow: none;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #666;
+            font-weight: 500;
         }
         
         .hero p {
-            font-size: 1rem;
-            margin-bottom: 30px;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            color: #555;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         
         .btn-primary {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
-            padding: 12px 30px;
+            padding: 14px 35px;
             font-size: 1rem;
             border-radius: 5px;
             color: white;
+            font-weight: 600;
         }
         
         .btn-primary:hover {
             background-color: var(--secondary-color);
             border-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            border: 2px solid #000000;
+            padding: 12px 33px;
+            font-size: 1rem;
+            border-radius: 5px;
+            color: #000000;
+            font-weight: 600;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
         }
         
         .content-section {
             background: #f5f5f5;
             border-radius: 2px;
-            padding: 40px;
-            margin: 20px 0;
+            padding: 50px 40px;
+            margin: 40px 0;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             border: 1px solid #cccccc;
         }
         
-        .work-card {
-            background: #f5f5f5;
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+        
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .feature-box {
+            background: white;
+            padding: 30px;
+            border: 1px solid #cccccc;
             border-radius: 2px;
-            padding: 20px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
             margin-bottom: 15px;
+        }
+        
+        .feature-box h4 {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #000000;
+            font-size: 1.15rem;
+        }
+        
+        .feature-box p {
+            font-size: 0.95rem;
+            color: #555;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .work-card {
+            background: white;
+            border-radius: 2px;
+            padding: 25px;
+            margin-bottom: 20px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            transition: box-shadow 0.2s;
             border: 1px solid #cccccc;
         }
         
         .work-card:hover {
-            transform: none;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
         }
         
         .work-card h3 {
             color: #000000;
-            margin-bottom: 10px;
-            font-size: 1rem;
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+            font-weight: bold;
         }
         
         .badge {
             background-color: #333333;
             color: white;
             font-size: 0.85rem;
+            padding: 4px 10px;
+            border-radius: 3px;
+            margin-right: 8px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .cta-section {
+            background: #000000;
+            color: white;
+            text-align: center;
+            padding: 60px 40px;
+            border-radius: 2px;
+            margin: 40px 0;
+        }
+        
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .btn-white {
+            background-color: white;
+            color: #000000;
+            padding: 12px 35px;
+            font-size: 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            border: none;
+        }
+        
+        .btn-white:hover {
+            background-color: #f0f0f0;
+            color: #000000;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -109,13 +252,14 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">🎨 Created by Humans</a>
+            <a class="navbar-brand" href="/">🎨 AI-Free Movement</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="ms-auto">
                     <a class="btn btn-light me-2" href="{% url 'register' %}">Register Work</a>
+                    <a class="btn btn-light me-2" href="{% url 'search_registry' %}">Browse Registry</a>
                     <a class="btn btn-light" href="{% url 'about' %}">About</a>
                 </div>
             </div>
@@ -123,29 +267,100 @@
     </nav>
 
     <div class="hero">
-        <h1>Register Your Creative Work</h1>
-        <p>Certify your creations as authentically human-made</p>
-        <a href="{% url 'register' %}" class="btn btn-primary btn-lg">Get Started</a>
+        <span class="hero-badge">Join the Movement</span>
+        <h1>Prove Your Work Is AI-Free</h1>
+        <p class="hero-subtitle">Protect your creative legacy in the age of AI</p>
+        <p>Register your original work and get a verifiable certificate proving it was created authentically by you—without AI assistance. Join thousands of creators standing up for human creativity.</p>
+        <div class="hero-buttons">
+            <a href="{% url 'register' %}" class="btn btn-primary">Register Your Work</a>
+            <a href="{% url 'search_registry' %}" class="btn btn-secondary">Explore Registry</a>
+        </div>
     </div>
 
     <div class="container">
+        <!-- Why Join Section -->
+        <div class="content-section">
+            <div class="section-title">Why Join the AI-Free Movement?</div>
+            <div class="section-subtitle">Prove authenticity. Build trust. Stand for human creativity.</div>
+            <div class="features">
+                <div class="feature-box">
+                    <div class="feature-icon">✍️</div>
+                    <h4>Prove Authenticity</h4>
+                    <p>Register your work with a verifiable certificate and unique ID that proves you created it without AI.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🔍</div>
+                    <h4>Build Trust</h4>
+                    <p>Share your registration ID to prove to audiences, clients, and publishers that your work is authentically human-made.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🎯</div>
+                    <h4>Stand Out</h4>
+                    <p>As AI content floods the market, your certified human-created work stands out as premium, authentic, and valuable.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">🌍</div>
+                    <h4>Join the Movement</h4>
+                    <p>Be part of a growing community defending human creativity and demonstrating the value of real artistic work.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="content-section">
+            <div class="section-title">How It Works</div>
+            <div style="margin-top: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 15px; font-weight: bold; color: #ff6b6b;">1</div>
+                        <h4>Register Your Work</h4>
+                        <p>Tell us about your creative work—music, art, writing, video, or more. A small registration fee helps prevent spam.</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 15px; font-weight: bold; color: #ff6b6b;">2</div>
+                        <h4>Instant Certificate</h4>
+                        <p>Get your registration certificate immediately with a unique verification ID that proves your creation date and authenticity.</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; margin-bottom: 15px; font-weight: bold; color: #ff6b6b;">3</div>
+                        <h4>Share & Verify</h4>
+                        <p>Share your registration ID anywhere. Anyone can verify your work in our public registry and confirm it's authentically human-made.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recently Registered Works Section -->
         {% if works %}
         <div class="content-section">
-            <h2>Recently Registered Works</h2>
-            <div class="mt-4">
+            <div class="section-title">Recently Registered AI-Free Creations</div>
+            <div class="section-subtitle">Real artists. Real creators. Certified human work.</div>
+            <div>
                 {% for work in works %}
                 <div class="work-card">
                     <h3>{{ work.title }}</h3>
-                    <p><strong>Creator:</strong> {{ work.creator.name }}</p>
-                    <p><strong>Category:</strong> <span class="badge">{{ work.get_category_display }}</span></p>
+                    <div style="margin-bottom: 12px;">
+                        <strong>Creator:</strong> {{ work.creator.name }} | 
+                        <span class="badge">{{ work.get_category_display }}</span>
+                    </div>
                     <p><strong>Registered:</strong> {{ work.registered_at|date:"F d, Y" }}</p>
-                    <p>{{ work.description|truncatewords:30 }}</p>
-                    <a href="{% url 'certificate' work.id %}" class="btn btn-sm btn-outline-primary">View Certificate</a>
+                    <p>{{ work.description|truncatewords:40 }}</p>
+                    <a href="{% url 'certificate' work.id %}" class="btn btn-sm" style="background: #000; color: white; padding: 6px 15px; border-radius: 3px; text-decoration: none;">View Certificate</a>
                 </div>
                 {% endfor %}
             </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="{% url 'search_registry' %}" style="color: #0066cc; text-decoration: none; font-weight: 500;">Browse all registered AI-free works →</a>
+            </div>
         </div>
         {% endif %}
+
+        <!-- Call to Action Section -->
+        <div class="cta-section">
+            <h2>Your Work Deserves Recognition</h2>
+            <p>In a world of AI-generated content, authentic human creativity is more valuable than ever. Register now and help build a community that celebrates real artistry.</p>
+            <a href="{% url 'register' %}" class="btn-white">Start Registering Today</a>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

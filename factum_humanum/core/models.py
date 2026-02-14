@@ -64,18 +64,6 @@ class Work(models.Model):
         help_text="Upload your creative work (max 100 MB). Allowed types: documents, audio, images, video, archives, design files."
     )
     registered_at = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(
-        max_length=20,
-        choices=[
-            ('pending_review', 'Pending Review'),
-            ('approved', 'Approved'),
-            ('rejected', 'Rejected'),
-        ],
-        default='pending_review',
-        help_text="Review status of the work"
-    )
-    reviewed_at = models.DateTimeField(null=True, blank=True)
-    reviewer_notes = models.TextField(blank=True, help_text="Notes from the reviewer")
     
     class Meta:
         ordering = ['-registered_at']

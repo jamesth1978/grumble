@@ -18,7 +18,7 @@ urlpatterns = [
     path("register/", core_views.register_work, name="register"),
     path("certificate/<uuid:work_id>/", core_views.certificate, name="certificate"),
     path("certificate/<uuid:work_id>/download/", core_views.download_certificate, name="download_certificate"),
-    path("work-received/<uuid:work_id>/", core_views.work_received, name="work_received"),
+    path("search/", core_views.search_registry, name="search_registry"),
     path("about/", core_views.about, name="about"),
     
     # Payment routes

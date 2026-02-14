@@ -6,9 +6,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Buy Credits - Register Your Works">
+    <meta name="description" content="Register Your AI-Free Work - Payment">
     <meta name="theme-color" content="#1f4788">
-    <title>Buy Credits - Factum Humanum</title>
+    <title>Register Your Work - Payment - Factum Humanum</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'main.css' %}">
     <style>
@@ -35,6 +35,20 @@
             color: white !important;
         }
         
+        .page-header {
+            text-align: center;
+            padding: 40px 20px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #cccccc;
+            margin-bottom: 40px;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
         .content-section {
             background: #f5f5f5;
             border-radius: 2px;
@@ -46,24 +60,24 @@
         
         .pricing-card {
             background: white;
-            border-left: 2px solid #333333;
-            padding: 25px;
             border-radius: 2px;
+            padding: 30px;
             margin: 20px 0;
-            border: 1px solid #cccccc;
+            border: 2px solid #ff6b6b;
+            text-align: center;
         }
         
         .pricing-card h3 {
             color: #000000;
             margin-bottom: 15px;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.2rem;
         }
         
         .price {
-            font-size: 1.25rem;
+            font-size: 2.5rem;
             font-weight: bold;
-            color: #000000;
+            color: #ff6b6b;
             margin: 15px 0;
         }
         
@@ -71,6 +85,9 @@
             font-size: 1rem;
             color: #333333;
             margin-bottom: 15px;
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 2px;
         }
         
         .form-section {
@@ -85,6 +102,7 @@
             color: #000000;
             margin-bottom: 20px;
             font-size: 1rem;
+            font-weight: bold;
         }
         
         .form-group label {
@@ -98,7 +116,6 @@
             border: 1px solid #cccccc;
             padding: 10px 12px;
             border-radius: 2px;
-            font-size: 1rem;
         }
         
         .form-control:focus {
@@ -106,49 +123,60 @@
             box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.25);
         }
         
-        .btn-primary {
+        .btn-payment {
             background-color: var(--primary-color);
             border-color: var(--primary-color);
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            margin-top: 15px;
+            padding: 14px 30px;
+            font-size: 1rem;
+            color: white;
+            border-radius: 5px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 20px;
         }
         
-        .btn-primary:hover {
+        .btn-payment:hover {
             background-color: var(--secondary-color);
             border-color: var(--secondary-color);
+            color: white;
         }
         
-        .alert-error {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .how-it-works {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
+        .benefits-section {
+            background: #f0f0f0;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 2px;
+            border: 1px solid #cccccc;
             margin: 20px 0;
         }
         
-        .how-it-works h5 {
-            color: #856404;
+        .benefits-section h5 {
+            font-weight: bold;
             margin-bottom: 15px;
         }
         
-        .how-it-works ol {
-            margin: 0;
+        .benefits-section ul {
+            margin-bottom: 0;
             padding-left: 20px;
         }
         
-        .how-it-works li {
-            margin-bottom: 8px;
-            color: #856404;
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            border-left: 3px solid #c62828;
+        }
+        
+        .info-badge {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -156,81 +184,91 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">🎨 Created by Humans</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="ms-auto">
-                    <a class="btn btn-light me-2" href="{% url 'register' %}">Register Work</a>
-                    <a class="btn btn-light" href="{% url 'about' %}">About</a>
-                </div>
-            </div>
+            <a class="navbar-brand" href="/">🎨 AI-Free Movement</a>
         </div>
     </nav>
 
+    <div class="page-header">
+        <h1>Complete Your Registration</h1>
+        <p>One more step to join the AI-Free movement</p>
+    </div>
+
     <div class="container">
-        <div class="content-section">
-            <div class="text-center mb-4">
-                <h1>💳 Buy Credits</h1>
-                <p class="lead">Register up to 5 creative works for <strong>£2</strong></p>
-            </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                {% if error %}
+                <div class="error-message">
+                    <strong>Payment Error:</strong> {{ error }}
+                </div>
+                {% endif %}
 
-            {% if error %}
-            <div class="alert-error">
-                <strong>Error:</strong> {{ error }}
-            </div>
-            {% endif %}
+                <div class="content-section">
+                    <div class="info-badge">STEP 2 OF 2</div>
+                    
+                    <h2 style="margin-bottom: 30px; font-size: 1.5rem;">Secure Payment</h2>
+                    
+                    <div class="pricing-card">
+                        <h3>AI-Free Work Registration</h3>
+                        <div class="price">£2.00</div>
+                        <div class="credits-count" style="background: transparent;">
+                            Register 1 work + get instant certificate
+                        </div>
+                        <p style="font-size: 0.9rem; color: #666; margin-bottom: 0;">
+                            Your creation date is certified. Your work joins our searchable registry. You get a verification ID to share anywhere.
+                        </p>
+                    </div>
 
-            <div class="pricing-card">
-                <h3>📦 Credit Package</h3>
-                <div class="credits-count">5 Work Registrations</div>
-                <div class="price">£2.00</div>
-                <p>Register and certify up to 5 creative works with our platform. Each registration includes:</p>
-                <ul>
-                    <li>File upload for your creative work</li>
-                    <li>Work details (title, category, description)</li>
-                    <li>Human creation verification review</li>
-                    <li>Official certificate (once approved)</li>
-                </ul>
-            </div>
+                    <div class="benefits-section">
+                        <h5>What You'll Get:</h5>
+                        <ul>
+                            <li>✓ Instant certificate proving authenticity</li>
+                            <li>✓ Unique registration/verification ID</li>
+                            <li>✓ Listed in our AI-Free registry</li>
+                            <li>✓ Shareable proof of human creation</li>
+                        </ul>
+                    </div>
 
-            <form method="post" class="form-section">
-                {% csrf_token %}
-                <h4>🔐 Complete Your Purchase</h4>
-                
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" class="form-control" id="email" name="email" 
-                           value="{{ email }}" placeholder="your@email.com" required>
-                    <small class="text-muted">We'll use this email to track your credits and send confirmations</small>
+                    <form method="post" class="form-section">
+                        {% csrf_token %}
+                        
+                        <h4>Your Email</h4>
+                        {% if form.email.errors %}
+                            <div class="error-message">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <label for="email">Email Address for Certificate *</label>
+                            <input 
+                                type="email" 
+                                class="form-control" 
+                                id="email" 
+                                name="email" 
+                                value="{{ email }}" 
+                                placeholder="you@example.com"
+                                required
+                            >
+                            <small class="text-muted">This is where we'll send your certificate and verification link</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-payment">
+                            Proceed to Payment (£2.00)
+                        </button>
+                    </form>
+
+                    <div style="text-align: center; margin-top: 20px; color: #666; font-size: 0.9rem;">
+                        <p>Payment powered by Stripe. Your credit card is secure and encrypted.</p>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-lg w-100">
-                    💳 Proceed to Payment
-                </button>
-            </form>
-
-            <div class="how-it-works">
-                <h5>❓ How It Works</h5>
-                <ol>
-                    <li>Enter your email address above</li>
-                    <li>Click "Proceed to Payment"</li>
-                    <li>Complete payment securely with Stripe</li>
-                    <li>Receive 5 credits instantly</li>
-                    <li>Start registering your works!</li>
-                </ol>
-            </div>
-
-            <div class="alert alert-info" role="alert">
-                <h5>🛡️ Secure Payment</h5>
-                <p>We use <strong>Stripe</strong> for secure payment processing. Your card details are never stored on our servers.</p>
-            </div>
-
-            <div class="text-center mt-4">
-                <a href="{% url 'register' %}" class="btn btn-outline-primary">
-                    ← Back to Registration
-                </a>
+                <div style="background: white; padding: 20px; border-radius: 2px; border: 1px solid #cccccc; margin-top: 30px;">
+                    <h5 style="margin-bottom: 15px; font-weight: bold;">Why This Fee?</h5>
+                    <p style="margin: 0;">
+                        Our £2.00 registration fee ensures only serious creators register their work 
+                        and helps prevent spam. Every payment supports our mission to protect human creativity 
+                        in the age of AI. This small investment proves your work is worth protecting.
+                    </p>
+                </div>
             </div>
         </div>
     </div>

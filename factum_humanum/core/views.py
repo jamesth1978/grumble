@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import FileResponse, HttpResponse
+from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
+from django.db.models import Q
 from .models import Creator, Work
 from .forms import CreatorForm, WorkForm
 from .pdf import generate_certificate_pdf
-from .emails import send_work_received_email
 
 
 def index(request):
-    works = Work.objects.select_related('creator').all()[:10]
+    """Display homepage with latest registered works"""
+    latest_works = Work.objects.select_related('creator').all()[:12]
     context = {
-        "title": "Created by Humans - Work Registration",
-        "works": works,
+        "title": "Factum Humanum - Register Your Human-Created Work",
+        "works": latest_works,
     }
     return render(request, "index.html", context)
 
@@ -34,129 +35,14 @@ def register_work(request):
             if not creator.has_credits():
                 return redirect('buy_credits') + f'?email={creator.email}'
             
-            # Create work with pending review status
+            # Create work (automatically approved)
             work = work_form.save(commit=False)
             work.creator = creator
-            work.status = 'pending_review'
             work.save()
             
             # Deduct one credit
             creator.credits -= 1
             creator.save()
-            
-            # Send confirmation email
-            try:
-                send_work_received_email(work)
-            except Exception as e:
-                print(f"Failed to send email: {e}")
-                # Don't fail registration just because email failed
-            
-            return redirect('work_received', work_id=work.id)
-    else:
-        creator_form = CreatorForm()
-        work_form = WorkForm()
-    
-    context = {
-        'creator_form': creator_form,
-        'work_form': work_form,
-    }
-    return render(request, 'register.html', context)
-
-
-def work_received(request, work_id):
-    """Show confirmation that work has been received and is under review"""
-    work = get_object_or_404(Work, id=work_id)
-    context = {
-        'work': work,
-        'message': f'Thank you for registering "{work.title}"! We have received your work and it is now under review. You will receive an email with a certificate once the review is complete.',
-    }
-    return render(request, 'work_received.html', context)
-
-
-def certificate(request, work_id):
-    """Display certificate details and allow PDF download"""
-    work = get_object_or_404(Work, id=work_id)
-    
-    # Only show certificate if work is approved
-    if work.status != 'approved':
-        context = {
-            'work': work,
-            'not_approved': True,
-            'message': 'This work is currently under review. You will receive an email once the review is complete.',
-        }
-        return render(request, 'certificate.html', context)
-    
-    context = {
-        'work': work,
-    }
-    return render(request, 'certificate.html', context)
-
-
-def download_certificate(request, work_id):
-    """Generate and download PDF certificate"""
-    work = get_object_or_404(Work, id=work_id)
-    
-    # Only allow download if approved
-    if work.status != 'approved':
-        return redirect('certificate', work_id=work.id)
-    
-    pdf_buffer = generate_certificate_pdf(work)
-    
-    response = HttpResponse(pdf_buffer, content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="certificate_{work.id}.pdf"'
-    
-    return response
-
-
-def about(request):
-    """Display information about Factum Humanum"""
-    context = {
-        'title': 'About Factum Humanum',
-    }
-    return render(request, 'about.html', context)
-from django.shortcuts import render
-
-def index(request):
-    context = {
-        "title": "Django example",
-    }
-    return render(request, "index.html", context)
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import FileResponse, HttpResponse
-from django.views.decorators.http import require_http_methods
-from .models import Creator, Work
-from .forms import CreatorForm, WorkForm
-from .pdf import generate_certificate_pdf
-
-
-def index(request):
-    works = Work.objects.select_related('creator').all()[:10]
-    context = {
-        "title": "Created by Humans - Work Registration",
-        "works": works,
-    }
-    return render(request, "index.html", context)
-
-
-@require_http_methods(["GET", "POST"])
-def register_work(request):
-    """Handle work registration with creator information"""
-    if request.method == 'POST':
-        creator_form = CreatorForm(request.POST)
-        work_form = WorkForm(request.POST)
-        
-        if creator_form.is_valid() and work_form.is_valid():
-            # Get or create creator
-            creator, created = Creator.objects.get_or_create(
-                email=creator_form.cleaned_data['email'],
-                defaults={'name': creator_form.cleaned_data['name']}
-            )
-            
-            # Create work
-            work = work_form.save(commit=False)
-            work.creator = creator
-            work.save()
             
             return redirect('certificate', work_id=work.id)
     else:
@@ -175,6 +61,7 @@ def certificate(request, work_id):
     work = get_object_or_404(Work, id=work_id)
     context = {
         'work': work,
+        'registration_id': str(work.id),
     }
     return render(request, 'certificate.html', context)
 
@@ -189,3 +76,53 @@ def download_certificate(request, work_id):
     response['Content-Disposition'] = f'attachment; filename="certificate_{work.id}.pdf"'
     
     return response
+
+
+def search_registry(request):
+    """Search and browse the public registry of registered works"""
+    query = request.GET.get('q', '').strip()
+    category_filter = request.GET.get('category', '')
+    
+    # Start with all works
+    works = Work.objects.select_related('creator').all()
+    
+    # Apply search query
+    if query:
+        works = works.filter(
+            Q(title__icontains=query) |
+            Q(description__icontains=query) |
+            Q(creator__name__icontains=query)
+        )
+    
+    # Apply category filter
+    if category_filter:
+        works = works.filter(category=category_filter)
+    
+    # Get category choices for filter dropdown
+    category_choices = Work.CATEGORY_CHOICES
+    
+    # Count results
+    total_count = works.count()
+    
+    # Paginate results (show 20 per page)
+    from django.core.paginator import Paginator
+    paginator = Paginator(works, 20)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+    
+    context = {
+        'page_obj': page_obj,
+        'query': query,
+        'category_filter': category_filter,
+        'category_choices': category_choices,
+        'total_count': total_count,
+    }
+    return render(request, 'search_registry.html', context)
+
+
+def about(request):
+    """Display information about Factum Humanum"""
+    context = {
+        'title': 'About Factum Humanum',
+    }
+    return render(request, 'about.html', context)

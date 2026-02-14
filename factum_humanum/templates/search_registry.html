@@ -1,0 +1,281 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Search the Factum Humanum registry of human-created works">
+    <meta name="theme-color" content="#1f4788">
+    <title>Search Registry - Factum Humanum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333333;
+        }
+        
+        body {
+            background: #ffffff;
+            min-height: 100vh;
+            font-family: Consolas, 'Courier New', Monaco, monospace;
+            color: #000000;
+        }
+        
+        .navbar {
+            background-color: #000000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-size: 1rem;
+            font-weight: bold;
+            color: white !important;
+        }
+        
+        .page-header {
+            text-align: center;
+            color: #000000;
+            padding: 40px 20px;
+            background: #f5f5f5;
+            border-bottom: 1px solid #cccccc;
+        }
+        
+        .page-header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .search-section {
+            background: white;
+            padding: 30px;
+            margin: 30px 0;
+            border: 1px solid #cccccc;
+            border-radius: 2px;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+        
+        .search-form input,
+        .search-form select {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .search-form button {
+            padding: 8px 20px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            border-radius: 5px;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .content-section {
+            background: #f5f5f5;
+            border-radius: 2px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cccccc;
+        }
+        
+        .results-info {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        .work-card {
+            background: white;
+            border-radius: 2px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.2s;
+            border: 1px solid #cccccc;
+        }
+        
+        .work-card:hover {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+        }
+        
+        .work-card h3 {
+            color: #000000;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .work-card-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .badge {
+            background-color: #333333;
+            color: white;
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            margin-right: 5px;
+        }
+        
+        .registration-id {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #999;
+            word-break: break-all;
+        }
+        
+        .pagination {
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">🎨 Created by Humans</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <a class="btn btn-light me-2" href="{% url 'register' %}">Register Work</a>
+                    <a class="btn btn-light me-2" href="{% url 'search_registry' %}">Search Registry</a>
+                    <a class="btn btn-light" href="{% url 'about' %}">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Search Registry</h1>
+        <p>Explore and verify human-created works</p>
+    </div>
+
+    <div class="container">
+        <!-- Search Form -->
+        <div class="search-section">
+            <form method="get" class="search-form">
+                <input type="text" name="q" placeholder="Search by title, creator, or description..." 
+                       value="{{ query }}" class="form-control">
+                <select name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    {% for value, label in category_choices %}
+                        <option value="{{ value }}" {% if category_filter == value %}selected{% endif %}>
+                            {{ label }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+
+        <!-- Results -->
+        {% if page_obj %}
+            <div class="content-section">
+                {% if query or category_filter %}
+                    <div class="results-info">
+                        Found {{ total_count }} result{{ total_count|pluralize }}
+                        {% if query %}matching "{{ query }}"{% endif %}
+                        {% if category_filter %}in {{ category_filter }}{% endif %}
+                    </div>
+                {% else %}
+                    <div class="results-info">
+                        Showing all registered works ({{ total_count }} total)
+                    </div>
+                {% endif %}
+
+                <!-- Work Cards -->
+                {% if page_obj %}
+                    {% for work in page_obj %}
+                        <div class="work-card">
+                            <h3>{{ work.title }}</h3>
+                            <div class="work-card-meta">
+                                <strong>Creator:</strong> {{ work.creator.name }} | 
+                                <strong>Category:</strong> <span class="badge">{{ work.get_category_display }}</span> |
+                                <strong>Registered:</strong> {{ work.registered_at|date:"F d, Y" }}
+                            </div>
+                            <p class="registration-id">
+                                <strong>Registration ID:</strong> {{ work.id }}
+                            </p>
+                            <p>{{ work.description|truncatewords:50 }}</p>
+                            <a href="{% url 'certificate' work.id %}" class="btn btn-sm btn-outline-primary">
+                                View Certificate
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <!-- Pagination -->
+                {% if page_obj.has_other_pages %}
+                    <nav>
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1{% if query %}&q={{ query }}{% endif %}{% if category_filter %}&category={{ category_filter }}{% endif %}">First</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category_filter %}&category={{ category_filter }}{% endif %}">Previous</a>
+                                </li>
+                            {% endif %}
+
+                            {% for num in page_obj.paginator.page_range %}
+                                {% if page_obj.number == num %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ num }}</span>
+                                    </li>
+                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ num }}{% if query %}&q={{ query }}{% endif %}{% if category_filter %}&category={{ category_filter }}{% endif %}">{{ num }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if query %}&q={{ query }}{% endif %}{% if category_filter %}&category={{ category_filter }}{% endif %}">Next</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if query %}&q={{ query }}{% endif %}{% if category_filter %}&category={{ category_filter }}{% endif %}">Last</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="no-results">
+                <p>No works found. Start by <a href="{% url 'register' %}">registering your work</a>!</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
