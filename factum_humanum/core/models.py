@@ -63,7 +63,8 @@ class Work(models.Model):
         blank=True,
         help_text="Upload your creative work (max 100 MB). Allowed types: documents, audio, images, video, archives, design files."
     )
-    work_link = models.URLField(
+    work_link = models.CharField(
+        max_length=500,
         null=True,
         blank=True,
         help_text="Link to your work online (optional)"

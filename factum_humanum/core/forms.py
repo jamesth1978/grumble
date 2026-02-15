@@ -45,9 +45,9 @@ class WorkForm(forms.ModelForm):
                 'type': 'date',
                 'required': True
             }),
-            'work_link': forms.URLInput(attrs={
+            'work_link': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'https://example.com/your-work',
+                'placeholder': 'example.com/your-work or your-website.com',
                 'required': False
             }),
         }
