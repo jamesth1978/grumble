@@ -11,7 +11,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from factum_humanum.core import views as core_views
-from factum_humanum.core import payment_views
+
+# Import payment_views only if stripe is available
+try:
+    from factum_humanum.core import payment_views
+    payment_views_available = True
+except ImportError:
+    payment_views_available = False
 
 urlpatterns = [
     path("", core_views.index),
@@ -21,15 +27,18 @@ urlpatterns = [
     path("search/", core_views.search_registry, name="search_registry"),
     path("about/", core_views.about, name="about"),
     
-    # Payment routes
-    path("credits/", payment_views.buy_credits, name="buy_credits"),
-    path("credits/success/", payment_views.checkout_success, name="checkout_success"),
-    path("credits/cancel/", payment_views.checkout_cancel, name="checkout_cancel"),
-    path("stripe/webhook/", payment_views.stripe_webhook, name="stripe_webhook"),
-    
     path("admin/", admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
 ]
+
+# Add payment routes only if stripe is available
+if payment_views_available:
+    urlpatterns += [
+        path("credits/", payment_views.buy_credits, name="buy_credits"),
+        path("credits/success/", payment_views.checkout_success, name="checkout_success"),
+        path("credits/cancel/", payment_views.checkout_cancel, name="checkout_cancel"),
+        path("stripe/webhook/", payment_views.stripe_webhook, name="stripe_webhook"),
+    ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

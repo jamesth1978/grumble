@@ -1,6 +1,9 @@
 """Stripe payment handling views"""
 import json
-import stripe
+try:
+    import stripe
+except ImportError:
+    stripe = None
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
@@ -9,13 +12,17 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from .models import Creator, Payment
 
-# Initialize Stripe
-stripe.api_key = settings.STRIPE_SECRET_KEY
+# Initialize Stripe only if available
+if stripe:
+    stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 @require_http_methods(["GET", "POST"])
 def buy_credits(request):
     """Display purchase page and handle checkout"""
+    if not stripe:
+        return JsonResponse({'error': 'Payment system not configured'}, status=500)
+    
     email = request.GET.get('email', '') or request.POST.get('email', '')
     
     if request.method == 'POST':
