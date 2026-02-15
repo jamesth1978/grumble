@@ -31,18 +31,10 @@ def register_work(request):
                 defaults={'name': creator_form.cleaned_data['name']}
             )
             
-            # Check if creator has credits
-            if not creator.has_credits():
-                return redirect('buy_credits') + f'?email={creator.email}'
-            
             # Create work (automatically approved)
             work = work_form.save(commit=False)
             work.creator = creator
             work.save()
-            
-            # Deduct one credit
-            creator.credits -= 1
-            creator.save()
             
             return redirect('certificate', work_id=work.id)
     else:
