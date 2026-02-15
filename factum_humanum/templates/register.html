@@ -157,7 +157,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">🎨 AI-Free Movement</a>
+            <a class="navbar-brand" href="/">Factum Humanum</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -180,11 +180,7 @@
             <div class="col-lg-8">
                 <div class="form-container">
                     <div class="form-intro">
-                        <p>Help prevent AI-generated content from flooding creative spaces. Register your work and get a verifiable certificate that proves it was created without AI assistance. A small registration fee helps us maintain this service and prevent spam.</p>
-                    </div>
-                    
-                    <div class="pricing-info">
-                        <strong>£2.00</strong> per work registration | Get instant certificate + verification ID
+                        <p>Help prevent AI-generated content from flooding creative spaces. Register your work and get a verifiable certificate that proves it was created without AI assistance.</p>
                     </div>
                     
                     <form method="post" class="mt-4" enctype="multipart/form-data">
@@ -275,35 +271,35 @@
                                 <span class="help-text">Describe your work in detail—your creative process, inspiration, techniques used. This helps verify authenticity.</span>
                             </div>
                             
-                            {% if work_form.work_file.errors %}
+                            {% if work_form.work_link.errors %}
                                 <div class="errorlist">
-                                    {% for error in work_form.work_file.errors %}
+                                    {% for error in work_form.work_link.errors %}
                                         <li>{{ error }}</li>
                                     {% endfor %}
                                 </div>
                             {% endif %}
                             <div class="mb-3">
-                                <label for="{{ work_form.work_file.id_for_label }}" class="form-label">Work File (Optional)</label>
-                                {{ work_form.work_file }}
-                                <span class="help-text">Upload a file of your work (max 100 MB). Formats: documents, audio, images, video, archives, design files</span>
+                                <label for="{{ work_form.work_link.id_for_label }}" class="form-label">Link to Your Work (Optional)</label>
+                                {{ work_form.work_link }}
+                                <span class="help-text">Share a link where your work can be viewed (e.g., your website, portfolio, social media)</span>
                             </div>
                         </div>
                         
                         <!-- Submit Button -->
                         <div class="mt-4">
-                            <button type="submit" class="btn btn-submit">Next: Payment (£2.00)</button>
+                            <button type="submit" class="btn btn-submit">Register My Work</button>
                         </div>
                     </form>
                 </div>
                 
                 <!-- Info Box -->
                 <div class="info-box">
-                    <h4>🔒 About This Registration Fee</h4>
+                    <h4>✓ What Happens Next</h4>
                     <ul>
-                        <li>Prevents spam and frivolous registrations</li>
-                        <li>Helps maintain and improve our verification systems</li>
-                        <li>Ensures only serious creators register high-quality work</li>
-                        <li>Supports the AI-Free movement and human creativity</li>
+                        <li>Your work will be verified and added to our registry</li>
+                        <li>You'll receive an instant digital certificate</li>
+                        <li>Get a unique verification ID to share and prove authenticity</li>
+                        <li>Download the official "No AI" logo to use in your promotions</li>
                     </ul>
                 </div>
             </div>
