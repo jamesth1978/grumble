@@ -1,11 +1,13 @@
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle, PageTemplate, Frame
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from io import BytesIO
 from datetime import datetime
+from django.conf import settings
+import os
 
 
 def generate_certificate_pdf(work):
@@ -45,7 +47,17 @@ def generate_certificate_pdf(work):
     )
     
     # Certificate Title
-    story.append(Spacer(1, 0.3*inch))
+    story.append(Spacer(1, 0.2*inch))
+    
+    # Add logo
+    logo_path = os.path.join(settings.STATIC_ROOT, 'no-ai-logo.svg')
+    try:
+        logo = Image(logo_path, width=1*inch, height=1*inch)
+        story.append(logo)
+        story.append(Spacer(1, 0.2*inch))
+    except:
+        pass  # If logo doesn't exist, continue without it
+    
     story.append(Paragraph("CERTIFICATE OF CREATION", title_style))
     story.append(Paragraph("Human-Created Work Registration", subtitle_style))
     story.append(Spacer(1, 0.3*inch))
@@ -101,7 +113,8 @@ def generate_certificate_pdf(work):
     story.append(Spacer(1, 0.3*inch))
     story.append(Paragraph(
         "This certificate verifies that the above work has been registered as human-created.<br/>"
-        "Certificate generated on " + datetime.now().strftime('%B %d, %Y'),
+        "Certificate generated on " + datetime.now().strftime('%B %d, %Y') + "<br/>"
+        "Visit <b>www.factuhumanum.com</b> to verify this work in our registry.",
         footer_style
     ))
     

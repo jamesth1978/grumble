@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Red circle background -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#ff4444" stroke-width="8"/>
+  <circle cx="100" cy="100" r="90" fill="#fff5f5"/>
+  
+  <!-- "No AI" text -->
+  <text x="100" y="75" font-size="48" font-weight="bold" font-family="Arial, sans-serif" text-anchor="middle" fill="#000000">NO</text>
+  <text x="100" y="125" font-size="48" font-weight="bold" font-family="Arial, sans-serif" text-anchor="middle" fill="#ff4444">AI</text>
+  
+  <!-- Red circle border for emphasis -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="#ff4444" stroke-width="3"/>
+</svg>

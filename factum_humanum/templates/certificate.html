@@ -255,13 +255,24 @@
             margin-bottom: 0;
             padding-left: 20px;
         }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo-container img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">🎨 AI-Free Movement</a>
+            <a class="navbar-brand" href="/">Factum Humanum</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -282,6 +293,9 @@
                 </div>
                 
                 <div class="certificate-container">
+                    <div class="logo-container">
+                        <img src="{% static 'no-ai-logo.svg' %}" alt="No AI Verified">
+                    </div>
                     <div class="certificate-header">
                         <h1>AI-Free Work Registration</h1>
                         <p>Certificate of Authenticity</p>
@@ -346,6 +360,14 @@
                     </div>
                     {% endif %}
                     
+                    <div class="file-section">
+                        <strong>🔏 No AI Verified Logo:</strong>
+                        <p class="mt-2 mb-2">Download and use the official "No AI" logo to promote your verified work</p>
+                        <a href="{% static 'no-ai-logo.svg' %}" class="file-download-btn" download="no-ai-logo.svg">
+                            📥 Download No AI Logo
+                        </a>
+                    </div>
+                    
                     <div class="action-buttons">
                         <a href="{% url 'download_certificate' work.id %}" class="btn-download">
                             📥 Download PDF Certificate
@@ -371,6 +393,8 @@
                         Your work has been added to our searchable AI-Free registry. Your registration ID <strong>{{ registration_id }}</strong> 
                         serves as permanent proof that your work was created by you on {{ work.creation_date|date:"F d, Y" }}. 
                         This cannot be altered or faked. Download your PDF certificate to include with your work portfolio.
+                        <br/><br/>
+                        Visit <a href="https://www.factuhumanum.com" target="_blank" style="color: #0066cc; text-decoration: underline;">Factum Humanum</a> to verify this work in our registry and explore other AI-free creations.
                     </p>
                 </div>
             </div>
