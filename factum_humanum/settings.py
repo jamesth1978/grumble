@@ -25,6 +25,13 @@ SECRET_KEY = config("SECRET_KEY", default='')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
 
+# Tell Django it's behind a proxy and to trust the 'https' header Railway sends
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Only set these to True if you want to force HTTPS (recommended for production)
+SECURE_SSL_REDIRECT = os.environ.get('DEBUG', 'False').lower() == 'false'
+
+
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
 
 if 'CODESPACE_NAME' in os.environ:
@@ -94,9 +101,11 @@ WSGI_APPLICATION = "factum_humanum.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.parse(config('DATABASE_URL', default=f'sqlite:///{BASE_DIR / "db.sqlite3"}'))
+    "default": dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
+        conn_max_age=600
+    )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
