@@ -2,9 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.db.models import Q
+from django.conf import settings
 from .models import Creator, Work
 from .forms import CreatorForm, WorkForm
 from .pdf import generate_certificate_pdf
+import zipfile
+import os
+import io
 
 
 def index(request):
@@ -66,6 +70,30 @@ def download_certificate(request, work_id):
     
     response = HttpResponse(pdf_buffer, content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="certificate_{work.id}.pdf"'
+    
+    return response
+
+
+def download_badges(request):
+    """Download both logo badges as a zip file"""
+    # Create a zip file in memory
+    zip_buffer = io.BytesIO()
+    
+    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+        # Add black logo
+        black_logo_path = os.path.join(settings.STATIC_ROOT, 'black_trans_logo_big.png')
+        if os.path.exists(black_logo_path):
+            zip_file.write(black_logo_path, arcname='black_trans_logo_big.png')
+        
+        # Add white logo
+        white_logo_path = os.path.join(settings.STATIC_ROOT, 'white_trans_logo_big.png')
+        if os.path.exists(white_logo_path):
+            zip_file.write(white_logo_path, arcname='white_trans_logo_big.png')
+    
+    zip_buffer.seek(0)
+    
+    response = HttpResponse(zip_buffer, content_type='application/zip')
+    response['Content-Disposition'] = 'attachment; filename="factum_humanum_badges.zip"'
     
     return response
 
