@@ -304,19 +304,19 @@
             <div style="margin-top: 30px;">
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
                     <div style="text-align: center;">
-                        <div style="font-size: 2.5rem; margin-bottom: 15px; font-weight: bold; color: #ff6b6b;">1</div>
+                        <div style="font-size: 2.5rem; margin-bottom: 15px; font-weight: bold; color: #000000;">1</div>
                         <h4>Register Your Work</h4>
-                        <p>Enter details about your work - website, music, art, writing, video etc. A small registration fee helps prevent spam.</p>
+                        <p>Enter details about your work - website, music, art, article, film etc.</p>
                     </div>
                     <div style="text-align: center;">
-                        <div style="font-size: 2.5rem; margin-bottom: 15px; font-weight: bold; color: #ff6b6b;">2</div>
-                        <h4>Certificate and Registry</h4>
-                        <p>Get a registration certificate immediately with a unique verification ID.</p>
+                        <div style="font-size: 2.5rem; margin-bottom: 15px; font-weight: bold; color: #000000;">2</div>
+                        <h4>Certificate, Watermark badges and Registry</h4>
+                        <p>Get watermarks for your website, registration certificate and a unique verification ID.</p>
                     </div>
                     <div style="text-align: center;">
-                        <div style="font-size: 2.5rem; margin-bottom: 15px; font-weight: bold; color: #ff6b6b;">3</div>
-                        <h4>Share & Verify</h4>
-                        <p>Share your Factum Humanum logo and link with your works to show that you value your audience and respect human endeavour. Anyone can look up your work in our public registry.</p>
+                        <div style="font-size: 2.5rem; margin-bottom: 15px; font-weight: bold; color: #000000;">3</div>
+                        <h4>Proudly display your AI free work</h4>
+                        <p>Use your Factum Humanum logo on your site.  Link to <factumhumanum class="org"></factumhumanum> Anyone can look up your work in our public registry.</p>
                     </div>
                 </div>
             </div>
@@ -326,7 +326,6 @@
         {% if works %}
         <div class="content-section">
             <div class="section-title">Recently Registered AI-Free Creations</div>
-            <div class="section-subtitle">Real artists. Real creators. Certified human work.</div>
             <div>
                 {% for work in works %}
                 <div class="work-card">
@@ -349,8 +348,8 @@
 
         <!-- Call to Action Section -->
         <div class="cta-section">
-            <h2>Your Work Deserves Recognition</h2>
-            <p>In a world of AI-generated content, authentic human creativity is more valuable than ever. Register now and help build a community that celebrates real artistry.</p>
+            <h2>Celebrate Your Creativity</h2>
+            <p>In a world of AI-generated content, let people know that you support human endeavour.</p>
             <a href="{% url 'register' %}" class="btn-white">Start Registering Today</a>
         </div>
     </div>
