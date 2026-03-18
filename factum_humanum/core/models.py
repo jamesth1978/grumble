@@ -47,6 +47,7 @@ class Work(models.Model):
         ('writing', 'Written Word'),
         ('visual', 'Visual Art'),
         ('film', 'Film/Video'),
+        ('website', 'Website'),
         ('other', 'Other'),
     ]
 
