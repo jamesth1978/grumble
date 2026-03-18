@@ -34,6 +34,7 @@ SECURE_SSL_REDIRECT = os.environ.get('DEBUG', 'False').lower() == 'false'
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split(',')
 
+
 if 'CODESPACE_NAME' in os.environ:
     codespace_name = config("CODESPACE_NAME")
     codespace_domain = config("GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN")

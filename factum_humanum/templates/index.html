@@ -274,7 +274,7 @@
     <div class="hero">
         <h1>A Register of Human-Created Works</h1>
         
-        <p>Register your AI-free work and get a verifiable token to show visitors to your site, music or artwork.</p>
+        <p>Stamp your work with a badge of AI-free authenticity.</p>
         <div class="hero-buttons">
             <a href="{% url 'register' %}" class="btn btn-primary">Register Your Work</a>
             <a href="{% url 'search_registry' %}" class="btn btn-secondary">Explore Registry</a>
@@ -285,14 +285,16 @@
         <!-- Why Join Section -->
         <div class="content-section">
             <div class="section-title">Why register my work as AI free?</div>
-            <div class="section-subtitle">Registering your work with Factum Humanum enables you to proudly advertise the practice, effort and inspiration that went in to your art, music or writing.
-                It also reassures them that they are not consuming some low effort, plagiarsied slop.
+            <div class="section-subtitle">Reassure your audience that they are not consuming some low effort, plagiarsied slop.  Register yourself or your work and download the Factum Humanum stamp of authenticity today!
                  </div>
-            <ul style="font-size: 1.1rem; line-height: 1.8; max-width: 600px;">
-                <li><strong>What is this?</strong> Factum Humanum is a registry for human-created works that are free of AI influence. Use this to show your audience that you value their attention.</li>
-                <li><strong>Why is it needed?</strong> <a href="{% url 'about' %}">Learn more here</a> for a deeper discussion. In a nutshell, AI slop is flooding our world and you can take a stand against it here.</li>
-                <li><strong>Join the Movement</strong> Be part of a growing community defending human creativity and demonstrating the value of real creative work.</li>
-            </ul>
+            <div style="position: relative;">
+                <img src="{% static 'white_trans_logo_big.png' %}" alt="Logo" style="position: absolute; top: -20px; left: 80px; width: 200px; opacity: 0.3; transform: rotate(-15deg); z-index: 1; pointer-events: none;">
+                <ul style="font-size: 1.1rem; line-height: 1.8; max-width: 600px; position: relative; z-index: 2;">
+                    <li><strong>What is this?</strong> Factum Humanum is a registry for human-created works that are free of AI influence. Use this to show your audience that you value their attention.</li>
+                    <li><strong>Why is it needed?</strong> <a href="{% url 'about' %}">Learn more here</a> for a deeper discussion. In a nutshell, AI slop is flooding our world and you can take a stand against it here.</li>
+                    <li><strong>Join the Movement</strong> Be part of a growing community defending human creativity and demonstrating the value of real creative work.</li>
+                </ul>
+            </div>
         </div>
 
         <!-- How It Works Section -->
