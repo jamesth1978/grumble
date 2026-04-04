@@ -6,9 +6,87 @@ from django.conf import settings
 from .models import Creator, Work
 from .forms import CreatorForm, WorkForm
 from .pdf import generate_certificate_pdf
+import re
+import random
 import zipfile
 import os
 import io
+
+
+def score_human_text(text: str) -> int:
+    """Return a score from 0-100 estimating how likely text was written by a human."""
+    text = (text or '').strip()
+    if not text:
+        return 0
+
+    words = re.findall(r"\w+", text)
+    word_count = len(words)
+    unique_word_ratio = len(set(words)) / word_count if word_count else 0
+    punctuation_count = len(re.findall(r"[!?]", text))
+
+    score = 45
+
+    if punctuation_count >= 1:
+        score += 8
+
+    if unique_word_ratio > 0.75:
+        score += 10
+    elif unique_word_ratio < 0.50:
+        score -= 10
+
+    human_clues = {
+        'i', 'me', 'my', 'mine', 'you', 'we', 'us', 'our',
+        'feel'
+    }
+    if any(word.lower() in human_clues for word in words):
+        score += 10
+
+    swear_stems = {
+        'fuck', 'bollocks', 'shit', 'bugger', 'tits', 'damn', 'arse', 'wanker', 
+        'piss', 'cunt', 'dick', 'bitch', 'areshole', 'twat'
+    }
+
+    # Count swear words including grammatical variations (plurals, -ing, -ed, etc.)
+    swear_count = 0
+    for word in words:
+        word_lower = word.lower()
+        for stem in swear_stems:
+            # Match stem with optional common suffixes: s, es, ing, ed, er, y
+            if re.match(rf'^{re.escape(stem)}(s|es|ing|ed|er|y)?$', word_lower):
+                swear_count += 1
+                break
+
+    # Apply scoring based on swear count
+    if swear_count >= 1:
+        score += 25
+        # Add random bonus for each additional swear word
+        for _ in range(swear_count - 1):
+            score += random.randint(4, 9)
+
+    score = max(0, min(100, score))
+    return score
+
+
+def describe_human_score(score: int) -> tuple[str, str]:
+    if score >= 85:
+        return (
+            'This text feels very human.',
+            'Nice work — you have used some pretty human words there'
+        )
+    if score >= 65:
+        return (
+            'This text looks likely human.',
+            'It has enough natural phrasing or swearing to feel authentic.'
+        )
+    if score >= 40:
+        return (
+            'This text is ambiguous.',
+            'It may still be human, but it has a few patterns that could be either.'
+        )
+    return (
+        'This text reads less like a human sentence.',
+        'Definitely a robot.'
+    )
 
 
 def index(request):
@@ -96,6 +174,28 @@ def download_badges(request):
     response['Content-Disposition'] = 'attachment; filename="factum_humanum_badges.zip"'
     
     return response
+
+
+def human_test(request):
+    """Provide a playful text evaluation tool for human-written sentences."""
+    sample_text = ''
+    score = None
+    verdict = None
+    explanation = None
+
+    if request.method == 'POST':
+        sample_text = request.POST.get('sample_text', '').strip()
+        score = score_human_text(sample_text)
+        verdict, explanation = describe_human_score(score)
+
+    context = {
+        'title': 'Human Proof Test',
+        'text': sample_text,
+        'score': score,
+        'verdict': verdict,
+        'explanation': explanation,
+    }
+    return render(request, 'human_test.html', context)
 
 
 def search_registry(request):

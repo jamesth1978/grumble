@@ -1,0 +1,173 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Try a sentence to see how human you are.">
+    <meta name="theme-color" content="#1f4788">
+    <title>Human Proof Test | Factum Humanum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333333;
+        }
+
+        body {
+            background: #ffffff;
+            min-height: 100vh;
+            font-family: Consolas, 'Courier New', Monaco, monospace;
+            color: #000000;
+        }
+
+        .navbar {
+            background-color: #000000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 1rem;
+            font-weight: bold;
+            color: white !important;
+        }
+
+        .hero {
+            text-align: center;
+            color: #000000;
+            padding: 80px 20px 40px 20px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: none;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .content-section {
+            background: #f5f5f5;
+            border-radius: 2px;
+            padding: 50px 40px;
+            margin: 40px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cccccc;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 2px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cccccc;
+            text-align: center;
+        }
+
+        .result-score {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .result-verdict {
+            font-size: 1.2rem;
+            color: #333333;
+            margin-bottom: 10px;
+        }
+
+        .result-note {
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Factum Humanum</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <a class="btn btn-light me-2" href="{% url 'register' %}">Register Work</a>
+                    <a class="btn btn-light me-2" href="{% url 'search_registry' %}">Browse Registry</a>
+                    <a class="btn btn-light me-2" href="{% url 'human_test' %}">Human Test</a>
+                    <a class="btn btn-light" href="{% url 'about' %}">About</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <span class="hero-badge">Sidequest</span>
+        <h1>Rate the human-ness of your text</h1>
+        <p class="hero-subtitle">Type a short sentence.</p>
+    </div>
+
+    <div class="container">
+        <div class="content-section">
+            <div class="section-title">Human Proof Text Tool</div>
+              <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="sample_text" class="form-label">Enter a short sentence or two</label>
+                    <textarea name="sample_text" id="sample_text" class="form-control" rows="4" required>{{ text }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Get my score</button>
+            </form>
+
+            {% if score is not None %}
+            <div class="result-card">
+                <div class="result-score">{{ score }}%</div>
+                <div class="result-verdict">{{ verdict }}</div>
+                <div class="result-note">{{ explanation }}</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
