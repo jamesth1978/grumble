@@ -184,7 +184,18 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="/">🎨 AI-Free Movement</a>
+            <a class="navbar-brand" href="/">Factum Humanum</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <a class="btn btn-light me-2" href="{% url 'register' %}">Register Work</a>
+                    <a class="btn btn-light me-2" href="{% url 'search_registry' %}">Browse Registry</a>
+                    <a class="btn btn-light me-2" href="{% url 'human_test' %}">Human Test</a>
+                    <a class="btn btn-light" href="{% url 'about' %}">About</a>
+                </div>
+            </div>
         </div>
     </nav>
 
